@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ projeto.nome }}</title>
+</head>
+<body>
+    <h1>{{ projeto.nome }}</h1>
+    <p>{{ projeto.descricao }}</p>
+    {% if projeto.imagem %}
+        <img src="/static/{{ projeto.imagem }}" alt="Imagem Projeto" width="200">
+    {% endif %}
+    <h2>Relatórios</h2>
+    <a href="{{ url_for('novo_relatorio', projeto_id=projeto.id) }}">+ Novo Relatório</a>
+    <ul>
+        {% for relatorio in relatorios %}
+            <li>
+                {{ relatorio.titulo }}
+                {% if relatorio.arquivo %}
+                    <br>
+                    <a href="/static/{{ relatorio.arquivo }}" target="_blank">Ver arquivo</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - Usuários</title>
+</head>
+<body>
+    <h1>Admin - Gerenciar Usuários</h1>
+    <a href="{{ url_for('logout') }}">Sair</a>
+    <a href="{{ url_for('novo_usuario') }}">+ Novo Usuário</a>
+    <ul>
+        {% for usuario in usuarios %}
+            <li>
+                {{ usuario.nome }} ({{ usuario.email }})
+                {% if usuario.foto %}
+                    <br>
+                    <img src="/static/{{ usuario.foto }}" alt="Foto" width="100">
+                {% endif %}
+                {% if usuario.id != 1 %}
+                    - <a href="{{ url_for('excluir_usuario', id=usuario.id) }}">Excluir</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Bem-vindo, {{ nome }}</h1>
+    <a href="{{ url_for('logout') }}">Sair</a>
+    <h2>Projetos</h2>
+    <a href="{{ url_for('novo_projeto') }}">+ Novo Projeto</a>
+    <ul>
+        {% for projeto in projetos %}
+            <li>
+                <a href="{{ url_for('projeto', projeto_id=projeto.id) }}">{{ projeto.nome }}</a>
+                <br>
+                <img src="/static/{{ projeto.imagem }}" alt="Imagem do projeto" width="150">
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
