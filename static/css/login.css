@@ -1,64 +1,68 @@
-/* Fonte clean e fundo centralizado */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to right, #ece9e6, #ffffff);
+    background-color: #2B4242; /* fundo verde escuro elegante */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-/* Container do formulário */
 .login-container {
-    background-color: #ffffff;
+    background-color: #C3C6C3; /* cinza claro */
     padding: 40px 30px;
     border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     width: 350px;
     text-align: center;
 }
 
-/* Título */
 .login-container h1 {
     margin-bottom: 25px;
-    color: #333;
+    color: #2B4242; /* verde escuro para contraste */
 }
 
-/* Campos de input */
 .login-container input[type="login"],
 .login-container input[type="password"] {
     width: 100%;
     padding: 12px 10px;
     margin: 10px 0;
-    border: 1px solid #ddd;
+    border: 1px solid #7D8F8B;
+    background-color: #F5F5F5;
+    color: #2B4242;
     border-radius: 10px;
     box-sizing: border-box;
     font-size: 14px;
+    transition: border 0.3s ease;
 }
 
-/* Botão de entrar */
+.login-container input:focus {
+    border-color: #6B8784;
+    outline: none;
+}
+
 .login-container button {
     width: 100%;
     padding: 12px;
-    background-color: #0056b3;
+    background-color: #6B8784;
     color: white;
     border: none;
     border-radius: 10px;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .login-container button:hover {
-    background-color: #003f7f;
+    background-color: #2B4242;
 }
 
-/* Mensagens de erro */
 ul {
     padding: 0;
     list-style: none;
-    color: red;
+    color: #B00020;
     font-size: 14px;
+    margin-bottom: 15px;
 }
