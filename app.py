@@ -4,7 +4,7 @@ import pymysql
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 'sua_chave_secreta'
+app.secret_key = 'segredo'
 
 # Configurações do MySQL
 MYSQL_HOST = 'localhost'
@@ -16,7 +16,6 @@ MYSQL_DB = 'atherion'
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 
 def get_db_connection():
     return pymysql.connect(
@@ -30,18 +29,18 @@ def get_db_connection():
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
+        login = request.form['login']
         senha = request.form['senha']
 
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM usuarios WHERE email = %s AND senha = %s", (email, senha))
+        cursor.execute("SELECT * FROM usuarios WHERE login = %s AND senha = %s", (login, senha))
         user = cursor.fetchone()
         conn.close()
 
         if user:
             session['user_id'] = user['id']
-            session['nome'] = user['nome']
+            session['nome'] = user.get('nome', 'Usuário')
             session['is_superuser'] = user['id'] == 1
             if session['is_superuser']:
                 return redirect(url_for('admin'))
@@ -51,12 +50,10 @@ def login():
             flash('Credenciais inválidas. Tente novamente.')
     return render_template('login.html')
 
-
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('login'))
-
 
 @app.route('/dashboard')
 def dashboard():
@@ -70,7 +67,6 @@ def dashboard():
     conn.close()
     return render_template('dashboard.html', projetos=projetos, nome=session['nome'])
 
-
 @app.route('/admin')
 def admin():
     if 'user_id' not in session or not session.get('is_superuser'):
@@ -83,7 +79,6 @@ def admin():
     conn.close()
     return render_template('admin.html', usuarios=usuarios)
 
-
 @app.route('/novo_usuario', methods=['GET', 'POST'])
 def novo_usuario():
     if 'user_id' not in session or not session.get('is_superuser'):
@@ -91,7 +86,7 @@ def novo_usuario():
 
     if request.method == 'POST':
         nome = request.form['nome']
-        email = request.form['email']
+        login = request.form['login']
         senha = request.form['senha']
 
         foto = request.files.get('foto')
@@ -104,13 +99,12 @@ def novo_usuario():
 
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO usuarios (nome, email, senha, foto) VALUES (%s, %s, %s, %s)", (nome, email, senha, caminho_foto))
+        cursor.execute("INSERT INTO usuarios (nome, login, senha, foto) VALUES (%s, %s, %s, %s)", (nome, login, senha, caminho_foto))
         conn.commit()
         conn.close()
         return redirect(url_for('admin'))
 
     return render_template('novo_usuario.html')
-
 
 @app.route('/excluir_usuario/<int:id>')
 def excluir_usuario(id):
@@ -127,7 +121,6 @@ def excluir_usuario(id):
     conn.commit()
     conn.close()
     return redirect(url_for('admin'))
-
 
 @app.route('/novo_projeto', methods=['GET', 'POST'])
 def novo_projeto():
@@ -155,7 +148,6 @@ def novo_projeto():
 
     return render_template('novo_projeto.html')
 
-
 @app.route('/projeto/<int:projeto_id>')
 def projeto(projeto_id):
     if 'user_id' not in session:
@@ -170,7 +162,6 @@ def projeto(projeto_id):
     relatorios = cursor.fetchall()
     conn.close()
     return render_template('projeto.html', projeto=projeto, relatorios=relatorios)
-
 
 @app.route('/projeto/<int:projeto_id>/novo_relatorio', methods=['GET', 'POST'])
 def novo_relatorio(projeto_id):
@@ -196,7 +187,6 @@ def novo_relatorio(projeto_id):
         return redirect(url_for('projeto', projeto_id=projeto_id))
 
     return render_template('novo_relatorio.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
