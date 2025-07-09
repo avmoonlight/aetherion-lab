@@ -66,3 +66,47 @@ ul {
     font-size: 14px;
     margin-bottom: 15px;
 }
+
+.input-group {
+    position: relative;
+    margin: 25px 0;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 10px 14px 10px;
+    border: 1px solid #7D8F8B;
+    border-radius: 10px;
+    background: #F5F5F5;
+    font-size: 14px;
+    color: #2B4242;
+    transition: border-color 0.3s;
+}
+
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    color: #2B4242;
+    font-size: 14px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    background: #F5F5F5;
+    padding: 0 4px;
+}
+
+/* Quando o input está focado OU tem conteúdo */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 10px;
+    font-size: 12px;
+    color: #6B8784;
+}
+
+/* Estilo para foco */
+.input-group input:focus {
+    border-color: #6B8784;
+    outline: none;
+}
