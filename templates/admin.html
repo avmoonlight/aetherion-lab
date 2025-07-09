@@ -1,25 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
     <title>Admin - Usuários</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <script src="/static/js/admin.js" defer></script>
 </head>
 <body>
-    <h1>Admin - Gerenciar Usuários</h1>
-    <a href="{{ url_for('logout') }}">Sair</a>
-    <a href="{{ url_for('novo_usuario') }}">+ Novo Usuário</a>
-    <ul>
-        {% for usuario in usuarios %}
-            <li>
-                {{ usuario.nome }} ({{ usuario.email }})
-                {% if usuario.foto %}
-                    <br>
-                    <img src="/static/{{ usuario.foto }}" alt="Foto" width="100">
-                {% endif %}
-                {% if usuario.id != 1 %}
-                    - <a href="{{ url_for('excluir_usuario', id=usuario.id) }}">Excluir</a>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="admin-container">
+        <header>
+            <h1>Gerenciar Usuários</h1>
+            <nav>
+                <a href="{{ url_for('logout') }}">Sair</a>
+                <button onclick="abrirPopup('novo')">+ Novo Usuário</button>
+            </nav>
+        </header>
+
+        <main>
+            <section class="usuarios-grid">
+                {% for usuario in usuarios %}
+                    <div class="usuario-card">
+                        <div class="usuario-info">
+                            <h2>{{ usuario.nome }}</h2>
+                            <p>{{ usuario.login }}</p>
+                            {% if usuario.foto %}
+                                <img src="/static/{{ usuario.foto }}" alt="Foto do usuário">
+                            {% endif %}
+                        </div>
+                        {% if usuario.id != 1 %}
+                        <div class="usuario-acoes">
+                            <button onclick="abrirPopup('editar', '{{ usuario.id }}')">Editar</button>
+                            <button onclick="abrirPopup('excluir', '{{ usuario.id }}')">Excluir</button>
+                        </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </section>
+        </main>
+
+        <!-- Modal genérico -->
+        <div id="popup" class="popup hidden">
+            <div class="popup-conteudo">
+                <span class="fechar" onclick="fecharPopup()">&times;</span>
+                <div id="popup-body">
+                    <!-- Conteúdo dinâmico do modal -->
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
