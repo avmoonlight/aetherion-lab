@@ -1,0 +1,64 @@
+/* Fonte clean e fundo centralizado */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container do formulário */
+.login-container {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+/* Título */
+.login-container h1 {
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Campos de input */
+.login-container input[type="login"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Botão de entrar */
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #003f7f;
+}
+
+/* Mensagens de erro */
+ul {
+    padding: 0;
+    list-style: none;
+    color: red;
+    font-size: 14px;
+}
