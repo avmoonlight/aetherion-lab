@@ -36,16 +36,23 @@
         {% if projetos %}
             <div class="projects-grid">
                 {% for projeto in projetos %}
-                    <a class="project-card"
-                       href="{{ url_for('projeto', projeto_id=projeto.id) }}">
-                        <img src="/static/{{ projeto.imagem or 'img/placeholder.png' }}"
-                             alt="Imagem de {{ projeto.nome }}">
-                        <div class="project-info">
-                            <h3>{{ projeto.nome }}</h3>
-                            <p>{{ projeto.descricao }}</p>
+                    <div class="card">
+                        <h3>{{ projeto.nome }}</h3>
+                        <p>{{ projeto.descricao }}</p>
+                        
+                        {% if projeto.imagem %}
+                            <img src="/static/{{ projeto.imagem }}" alt="Imagem do projeto">
+                        {% endif %}
+
+                        <div class="botoes-projeto">
+                            <a href="{{ url_for('editar_projeto', id=projeto.id) }}" class="btn editar">Editar</a>
+                            <a href="{{ url_for('excluir_projeto', id=projeto.id) }}" class="btn excluir" onclick="return confirm('Deseja excluir este projeto?')">Excluir</a>
                         </div>
-                    </a>
+                    </div>
+
+
                 {% endfor %}
+                
             </div>
         {% else %}
             <p class="sem-projetos">Ainda não há projetos cadastrados.</p>

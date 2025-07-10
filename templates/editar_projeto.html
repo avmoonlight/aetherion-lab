@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Projeto</title>
+</head>
+<body>
+    <h1>Editar Projeto</h1>
+    <form action="{{ url_for('editar_projeto', id=projeto.id) }}" method="post" enctype="multipart/form-data">
+        <label>Nome:</label>
+        <input type="text" name="nome" value="{{ projeto.nome }}" required>
+
+        <label>Descrição:</label>
+        <textarea name="descricao" required>{{ projeto.descricao }}</textarea>
+
+        <label>Imagem:</label>
+        <input type="file" name="imagem">
+        {% if projeto.imagem %}
+            <img src="/static/{{ projeto.imagem }}" alt="Imagem atual" style="max-width: 200px;">
+        {% endif %}
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</body>
+</html>

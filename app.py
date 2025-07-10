@@ -221,6 +221,51 @@ def editar_usuario(id):
     conn.close()
     return render_template('editar_usuario.html', usuario=usuario)
 
+@app.route('/editar_projeto/<int:id>', methods=['GET', 'POST'])
+def editar_projeto(id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM projetos WHERE id = %s", (id,))
+    projeto = cursor.fetchone()
+
+    if request.method == 'POST':
+        nome = request.form['nome']
+        descricao = request.form['descricao']
+
+        imagem = request.files.get('imagem')
+        caminho_imagem = projeto['imagem']
+        if imagem and imagem.filename:
+            filename = secure_filename(imagem.filename)
+            caminho_imagem = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace('\\', '/')
+            imagem.save(caminho_imagem)
+            caminho_imagem = caminho_imagem.replace('static/', '')
+
+        cursor.execute("""
+            UPDATE projetos SET nome=%s, descricao=%s, imagem=%s WHERE id=%s
+        """, (nome, descricao, caminho_imagem, id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('dashboard'))
+
+    conn.close()
+    return render_template('editar_projeto.html', projeto=projeto)
+
+@app.route('/excluir_projeto/<int:id>')
+def excluir_projeto(id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM projetos WHERE id = %s", (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('dashboard'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
