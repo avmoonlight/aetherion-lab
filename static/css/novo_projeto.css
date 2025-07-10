@@ -1,0 +1,122 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #002147; /* Oxford Blue */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 900px;
+    height: 550px;
+    background-color: #d2b48c; /* Tan */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.form-section {
+    width: 50%;
+    padding: 50px 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #002147; /* Oxford Blue */
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    color: #5a5a5a;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.back-button:hover {
+    color: #000;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #002147;
+}
+
+input[type="text"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f5f0e6;
+    color: #333;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+input[type="file"] {
+    background-color: transparent;
+    color: #333;
+}
+
+.submit-button {
+    background-color: #002147; /* Oxford Blue */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #001533;
+}
+
+.image-section {
+    width: 50%;
+    background-image: url('../img/fundo-addproj.jpg'); /* substitua com seu caminho */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.overlay h1 {
+    font-size: 26px;
+    color: white;
+}
