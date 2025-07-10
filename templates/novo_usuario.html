@@ -1,24 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
     <title>Novo Usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/novo_usuario.css') }}">
 </head>
 <body>
-    <h1>Criar Novo Usuário</h1>
-    <form method="post" enctype="multipart/form-data">
-        <label>Nome:</label><br>
-        <input type="text" name="nome" required><br><br>
-
-        <label>Email:</label><br>
-        <input type="login" name="login" required><br><br>
-
-        <label>Senha:</label><br>
-        <input type="password" name="senha" required><br><br>
-
-        <label>Foto:</label><br>
-        <input type="file" name="foto"><br><br>
-
-        <button type="submit">Salvar</button>
-    </form>
+    <div class="container">
+        <div class="form-section">
+            <a href="{{ url_for('admin') }}" class="back-button">← Voltar</a>
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="login">Login</label>
+                    <input type="text" name="login" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" name="senha" required>
+                </div>
+                <div class="form-group">
+                    <label for="foto">Foto</label>
+                    <input type="file" name="foto">
+                </div>
+                <button type="submit" class="submit-button">Salvar</button>
+            </form>
+        </div>
+        <div class="image-section">
+            <div class="overlay">
+                <h1>Criar Novo Usuário</h1>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
