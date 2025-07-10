@@ -188,5 +188,39 @@ def novo_relatorio(projeto_id):
 
     return render_template('novo_relatorio.html')
 
+@app.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
+def editar_usuario(id):
+    if 'user_id' not in session or not session.get('is_superuser'):
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM usuarios WHERE id = %s", (id,))
+    usuario = cursor.fetchone()
+
+    if request.method == 'POST':
+        nome = request.form['nome']
+        login = request.form['login']
+        senha = request.form['senha']
+
+        foto = request.files.get('foto')
+        caminho_foto = usuario['foto']  # mantém a foto antiga se nenhuma nova for enviada
+        if foto and foto.filename:
+            filename = secure_filename(foto.filename)
+            caminho_foto = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace('\\', '/')
+            foto.save(caminho_foto)
+            caminho_foto = caminho_foto.replace('static/', '')
+
+        cursor.execute("""
+            UPDATE usuarios SET nome=%s, login=%s, senha=%s, foto=%s WHERE id=%s
+        """, (nome, login, senha, caminho_foto, id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('admin'))
+
+    conn.close()
+    return render_template('editar_usuario.html', usuario=usuario)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

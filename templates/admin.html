@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <title>Admin - Usuários</title>
     <link rel="stylesheet" href="/static/css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/js/admin.js" defer></script>
 </head>
 <body>
     <div class="admin-container">
-        <header>
+
+        <!-- Seção 1 - Título com Parallax -->
+        <header class="parallax-section">
+            <a href="{{ url_for('login') }}" class="btn-voltar-login">Voltar para Login</a>
             <h1>Gerenciar Usuários</h1>
             <nav>
                 <a href="{{ url_for('logout') }}">Sair</a>
-                <a href="{{ url_for('novo_usuario') }}">+ Novo Usuário</a>
-
+                <a href="{{ url_for('novo_usuario') }}" class="btn-novo">+ Novo Usuário</a>
             </nav>
         </header>
 
+        <!-- Seção 2 - Grade de Usuários -->
         <main>
             <section class="usuarios-grid">
                 {% for usuario in usuarios %}
@@ -28,16 +32,39 @@
                                 <img src="/static/{{ usuario.foto }}" alt="Foto do usuário">
                             {% endif %}
                         </div>
+                        <!-- dentro de cada .usuario-card -->
                         {% if usuario.id != 1 %}
                         <div class="usuario-acoes">
-                            <button onclick="abrirPopup('editar', '{{ usuario.id }}')">Editar</button>
-                            <button onclick="abrirPopup('excluir', '{{ usuario.id }}')">Excluir</button>
+                            <a href="{{ url_for('editar_usuario', id=usuario.id) }}" class="btn">Editar</a>
+                            <a href="{{ url_for('excluir_usuario', id=usuario.id) }}" class="btn" onclick="return confirm('Deseja realmente excluir este usuário?')">Excluir</a>
                         </div>
                         {% endif %}
                     </div>
                 {% endfor %}
             </section>
-        </main>
+
+            <!-- Seção dos Gráficos -->
+            <section class="graficos">
+            <div class="grafico-container">
+                <canvas id="graficoBarra"></canvas>
+            </div>
+            <div class="grafico-container">
+                <canvas id="graficoPizza"></canvas>
+            </div>
+            </section>
+
+            <!-- Sobre Nossa Empresa com imagem -->
+            <section class="sobre-empresa">
+            <div class="texto-sobre">
+                <h2>Sobre Nossa Empresa</h2>
+                <p>Somos uma plataforma voltada para o gerenciamento eficiente de usuários, focando na praticidade, segurança e usabilidade.</p>
+                <p>Nosso objetivo é oferecer soluções simples, intuitivas e rápidas para equipes que precisam de organização e controle.</p>
+            </div>
+            <div class="imagem-sobre">
+                <img src="../static/img/empresa.jpg" alt="Imagem da empresa">
+            </div>
+            </section>
+
 
         <!-- Modal genérico -->
         <div id="popup" class="popup hidden">
@@ -48,6 +75,48 @@
                 </div>
             </div>
         </div>
+
+        <!-- Botão voltar ao topo -->
+        <button id="btn-topo" title="Voltar ao topo">↑</button>
     </div>
+
+    <!-- Modal Editar Usuário -->
+<div id="modalEditar" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fecharModal('modalEditar')">&times;</span>
+    <h2>Editar Usuário</h2>
+    <form id="formEditarUsuario">
+      <input type="hidden" id="editUserId">
+
+      <label for="editNome">Nome:</label>
+      <input type="text" id="editNome" required>
+
+      <label for="editLogin">Login:</label>
+      <input type="text" id="editLogin" required>
+
+      <label for="editSenha">Senha:</label>
+      <input type="password" id="editSenha" required>
+
+      <label for="editFoto">Foto (URL ou caminho):</label>
+      <input type="text" id="editFoto">
+
+      <button type="submit">Salvar Alterações</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Excluir Usuário -->
+<div id="modalExcluir" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fecharModal('modalExcluir')">&times;</span>
+    <h2>Excluir Usuário</h2>
+    <p>Tem certeza que deseja excluir este usuário?</p>
+    <input type="hidden" id="deleteUserId">
+    <button onclick="confirmarExclusao()">Sim, Excluir</button>
+    <button onclick="fecharModal('modalExcluir')">Cancelar</button>
+  </div>
+</div>
+
+
 </body>
 </html>
