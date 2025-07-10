@@ -3,27 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Usuário</title>
-    <link rel="stylesheet" href="/static/css/novo_usuario.css">
+    <link rel="stylesheet" href="/static/css/editar_usuario.css">
 </head>
 <body>
-    <div class="form-container">
-        <h1>Editar Usuário</h1>
-        <form method="POST" enctype="multipart/form-data">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="{{ usuario.nome }}" required>
+    <div class="container">
+        <div class="left-panel">
+            <a href="{{ url_for('admin') }}">← Voltar</a>
+            <form method="POST" enctype="multipart/form-data">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" value="{{ usuario.nome }}" required>
 
-            <label for="login">Login:</label>
-            <input type="text" id="login" name="login" value="{{ usuario.login }}" required>
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="login" value="{{ usuario.login }}" required>
 
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" value="{{ usuario.senha }}" required>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" value="{{ usuario.senha }}" required>
 
-            <label for="foto">Foto:</label>
-            <input type="file" id="foto" name="foto">
+                <label for="foto">Foto:</label>
+                <input type="file" id="foto" name="foto">
 
-            <button type="submit">Salvar Alterações</button>
-        </form>
-        <a href="{{ url_for('admin') }}">Voltar</a>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+        <div class="right-panel">
+            <h1>Modificar Usuário</h1>
+        </div>
     </div>
 </body>
 </html>

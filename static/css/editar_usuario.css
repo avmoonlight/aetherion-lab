@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #1e1f26;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 900px;
+    height: 500px;
+    background-color: #262734;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.left-panel {
+    flex: 1;
+    padding: 40px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #262734;
+    position: relative;
+}
+
+.left-panel a {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #a8cfd0;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.left-panel label {
+    margin: 10px 0 5px;
+    font-weight: 600;
+}
+
+.left-panel input[type="text"],
+.left-panel input[type="password"],
+.left-panel input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background-color: #393a4a;
+    color: #eee;
+}
+
+.left-panel button {
+    background-color: #20c997;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100px;
+}
+
+.left-panel button:hover {
+    background-color: #17b28d;
+}
+
+.right-panel {
+    flex: 1;
+    background-image: url('/static/img/fundo-modificar.jpg'); /* substitua se quiser */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.right-panel h1 {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    white-space: nowrap;
+}
