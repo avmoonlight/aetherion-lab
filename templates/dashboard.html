@@ -1,21 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
     <title>Dashboard</title>
+
+    <!-- CSS principal -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
 <body>
-    <h1>Bem-vindo, {{ nome }}</h1>
-    <a href="{{ url_for('logout') }}">Sair</a>
-    <h2>Projetos</h2>
-    <a href="{{ url_for('novo_projeto') }}">+ Novo Projeto</a>
-    <ul>
-        {% for projeto in projetos %}
-            <li>
-                <a href="{{ url_for('projeto', projeto_id=projeto.id) }}">{{ projeto.nome }}</a>
-                <br>
-                <img src="/static/{{ projeto.imagem }}" alt="Imagem do projeto" width="150">
-            </li>
-        {% endfor %}
-    </ul>
+
+    <!-- ===== HERO / CABEÇALHO ===== -->
+    <header class="hero">
+        <nav class="topbar">
+            <!-- Botão Logout à esquerda -->
+            <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+        </nav>
+
+        <div class="hero-content">
+            <!-- Nome do usuário -->
+            <h1 class="hero-title">Olá, {{ nome }}!</h1>
+
+            <!-- Palavra “Projetos” centralizada -->
+            <h2 class="hero-subtitle">Projetos</h2>
+
+            <!-- Botão para novo projeto -->
+            <a href="{{ url_for('novo_projeto') }}" class="btn">
+                + Adicionar novo projeto
+            </a>
+        </div>
+    </header>
+
+    <!-- ===== LISTA DE PROJETOS ===== -->
+    <section id="projetos">
+        {% if projetos %}
+            <div class="projects-grid">
+                {% for projeto in projetos %}
+                    <a class="project-card"
+                       href="{{ url_for('projeto', projeto_id=projeto.id) }}">
+                        <img src="/static/{{ projeto.imagem or 'img/placeholder.png' }}"
+                             alt="Imagem de {{ projeto.nome }}">
+                        <div class="project-info">
+                            <h3>{{ projeto.nome }}</h3>
+                            <p>{{ projeto.descricao }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="sem-projetos">Ainda não há projetos cadastrados.</p>
+        {% endif %}
+    </section>
+
 </body>
 </html>
