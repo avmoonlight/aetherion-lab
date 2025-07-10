@@ -3,23 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Projeto</title>
+    <link rel="stylesheet" href="/static/css/editar_projeto.css">
 </head>
 <body>
-    <h1>Editar Projeto</h1>
-    <form action="{{ url_for('editar_projeto', id=projeto.id) }}" method="post" enctype="multipart/form-data">
-        <label>Nome:</label>
-        <input type="text" name="nome" value="{{ projeto.nome }}" required>
+    <div class="container">
+        <div class="left-panel">
+            <a href="{{ url_for('dashboard') }}">← Voltar</a>
+            <form action="{{ url_for('editar_projeto', id=projeto.id) }}" method="post" enctype="multipart/form-data">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" value="{{ projeto.nome }}" required>
 
-        <label>Descrição:</label>
-        <textarea name="descricao" required>{{ projeto.descricao }}</textarea>
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" required>{{ projeto.descricao }}</textarea>
 
-        <label>Imagem:</label>
-        <input type="file" name="imagem">
-        {% if projeto.imagem %}
-            <img src="/static/{{ projeto.imagem }}" alt="Imagem atual" style="max-width: 200px;">
-        {% endif %}
+                <label for="imagem">Imagem:</label>
+                <div class="upload-preview">
+                    <input type="file" id="imagem" name="imagem">
+                    {% if projeto.imagem %}
+                        <img src="{{ url_for('static', filename=projeto.imagem) }}" alt="Imagem atual" class="mini-preview">
+                    {% endif %}
+                </div>
 
-        <button type="submit">Salvar Alterações</button>
-    </form>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+
+        <div class="right-panel">
+            <h1>Editar Projeto</h1>
+        </div>
+    </div>
 </body>
 </html>
