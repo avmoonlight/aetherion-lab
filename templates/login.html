@@ -20,10 +20,17 @@
         {% endwith %}
 
         <form method="POST">
-            <input type="login" name="login" placeholder="Login" required>
-            <input type="password" name="senha" placeholder="Senha" required>
-            <button type="submit">Entrar</button>
-        </form>
+    <input type="login" name="login" placeholder="Login" required>
+    
+    <div class="password-wrapper">
+        <input type="password" name="senha" id="senha" placeholder="Senha" required>
+        <span class="toggle-password" onclick="togglePassword()">👁️</span>
     </div>
+
+    <button type="submit">Entrar</button>
+</form>
+</div>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+
 </body>
 </html>

@@ -2,7 +2,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #2B4242; /* fundo verde escuro elegante */
+    background: url('../img/fundo-login.jpg') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,43 +11,51 @@ body {
 }
 
 .login-container {
-    background-color: #C3C6C3; /* cinza claro */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 40px 30px;
     border-radius: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     width: 350px;
     text-align: center;
 }
 
 .login-container h1 {
     margin-bottom: 25px;
-    color: #2B4242; /* verde escuro para contraste */
+    color: white;
+    font-weight: bold;
 }
 
-.login-container input[type="login"],
-.login-container input[type="password"] {
+/* Usar input genérico para manter estilo ao alternar type */
+.login-container input {
     width: 100%;
     padding: 12px 10px;
     margin: 10px 0;
-    border: 1px solid #7D8F8B;
-    background-color: #F5F5F5;
-    color: #2B4242;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
     border-radius: 10px;
     box-sizing: border-box;
     font-size: 14px;
-    transition: border 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.login-container input::placeholder {
+    color: #eee;
 }
 
 .login-container input:focus {
-    border-color: #6B8784;
+    border: 1px solid #fff;
     outline: none;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .login-container button {
     width: 100%;
     padding: 12px;
-    background-color: #6B8784;
-    color: white;
+    background-color: white;
+    color: #2B4242;
     border: none;
     border-radius: 10px;
     font-size: 16px;
@@ -56,7 +65,7 @@ body {
 }
 
 .login-container button:hover {
-    background-color: #2B4242;
+    background-color: #ddd;
 }
 
 ul {
@@ -66,4 +75,3 @@ ul {
     font-size: 14px;
     margin-bottom: 15px;
 }
-
