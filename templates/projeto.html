@@ -1,26 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
     <title>{{ projeto.nome }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/projeto.css') }}">
 </head>
 <body>
-    <h1>{{ projeto.nome }}</h1>
-    <p>{{ projeto.descricao }}</p>
-    {% if projeto.imagem %}
-        <img src="/static/{{ projeto.imagem }}" alt="Imagem Projeto" width="200">
-    {% endif %}
-    <h2>Relatórios</h2>
-    <a href="{{ url_for('novo_relatorio', projeto_id=projeto.id) }}">+ Novo Relatório</a>
-    <ul>
-        {% for relatorio in relatorios %}
-            <li>
-                {{ relatorio.titulo }}
-                {% if relatorio.arquivo %}
-                    <br>
-                    <a href="/static/{{ relatorio.arquivo }}" target="_blank">Ver arquivo</a>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <a href="{{ url_for('dashboard') }}" class="voltar">← Voltar</a>
+
+
+    <!-- ===== HERO ===== -->
+    <header class="hero" style="background-image:url('/static/img/fundo-relatorios.jpg')">
+        <div class="overlay">
+            <h1>{{ projeto.nome }}</h1>
+            <p>{{ projeto.descricao }}</p>
+        </div>
+    </header>
+
+    <!-- ===== BANNER LATERAL COM BOTÃO ===== -->
+    <section class="intro">
+        <div class="intro-text">
+            <h2>Relatórios do Projeto</h2>
+            <p>Acompanhe abaixo todos os relatórios enviados (imagens ou PDFs).</p>
+        </div>
+
+        <div class="intro-image">
+            {% if projeto.imagem %}
+                <img src="/static/{{ projeto.imagem }}" alt="Imagem do projeto">
+            {% endif %}
+            <a href="{{ url_for('novo_relatorio', projeto_id=projeto.id) }}" class="btn-add">
+                + Novo Relatório
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== GRID DE RELATÓRIOS ===== -->
+    <section class="relatorios">
+        {% if relatorios %}
+            <div class="masonry">
+                {% for rel in relatorios %}
+                    <div class="rel-card">
+                        <h3>{{ rel.titulo }}</h3>
+
+                        {% if rel.arquivo %}
+                            {% if rel.arquivo.endswith('.pdf') %}
+                                <embed src="/static/{{ rel.arquivo }}#toolbar=0"
+                                       type="application/pdf">
+                            {% else %}
+                                <img src="/static/{{ rel.arquivo }}" alt="{{ rel.titulo }}">
+                            {% endif %}
+                        {% else %}
+                            <p>(sem arquivo)</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="sem-relatorios">Ainda não há relatórios cadastrados.</p>
+        {% endif %}
+    </section>
+
 </body>
 </html>
