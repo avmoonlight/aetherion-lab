@@ -186,6 +186,9 @@ def novo_relatorio(projeto_id):
         conn.close()
         return redirect(url_for('projeto', projeto_id=projeto_id))
 
+    return render_template('novo_relatorio.html', projeto_id=projeto_id)
+
+
     return render_template('novo_relatorio.html')
 
 @app.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
