@@ -34,31 +34,41 @@
         </div>
     </section>
 
-    <!-- ===== GRID DE RELATÓRIOS ===== -->
-    <section class="relatorios">
-        {% if relatorios %}
-            <div class="masonry">
-                {% for rel in relatorios %}
-                    <div class="rel-card">
-                        <h3>{{ rel.titulo }}</h3>
+   <!-- ===== GRID DE RELATÓRIOS ===== -->
+<section class="relatorios">
+    {% if relatorios %}
+        <div class="masonry">
+            {% for rel in relatorios %}
+                <div class="rel-card">
+                    <h3>{{ rel.titulo }}</h3>
 
-                        {% if rel.arquivo %}
-                            {% if rel.arquivo.endswith('.pdf') %}
-                                <embed src="/static/{{ rel.arquivo }}#toolbar=0"
-                                       type="application/pdf">
-                            {% else %}
-                                <img src="/static/{{ rel.arquivo }}" alt="{{ rel.titulo }}">
-                            {% endif %}
+                    {% if rel.arquivo %}
+                        {% if rel.arquivo.endswith('.pdf') %}
+                            <embed src="/static/{{ rel.arquivo }}#toolbar=0"
+                                   type="application/pdf">
                         {% else %}
-                            <p>(sem arquivo)</p>
+                            <img src="/static/{{ rel.arquivo }}" alt="{{ rel.titulo }}">
                         {% endif %}
+                    {% else %}
+                        <p>(sem arquivo)</p>
+                    {% endif %}
+
+                    <!-- Botões de ação -->
+                    <div class="relatorio-botoes" style="margin-top: 10px;">
+                        <a href="{{ url_for('editar_relatorio', relatorio_id=rel.id) }}"
+                           class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{{ url_for('excluir_relatorio', relatorio_id=rel.id) }}"
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Tem certeza que deseja excluir este relatório?')">Excluir</a>
                     </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p class="sem-relatorios">Ainda não há relatórios cadastrados.</p>
-        {% endif %}
-    </section>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="sem-relatorios">Ainda não há relatórios cadastrados.</p>
+    {% endif %}
+</section>
+
 
 </body>
 </html>

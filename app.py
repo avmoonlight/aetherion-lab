@@ -188,9 +188,6 @@ def novo_relatorio(projeto_id):
 
     return render_template('novo_relatorio.html', projeto_id=projeto_id)
 
-
-    return render_template('novo_relatorio.html')
-
 @app.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
 def editar_usuario(id):
     if 'user_id' not in session or not session.get('is_superuser'):
@@ -268,6 +265,60 @@ def excluir_projeto(id):
     conn.close()
     return redirect(url_for('dashboard'))
 
+@app.route('/editar_relatorio/<int:relatorio_id>', methods=['GET', 'POST'])
+def editar_relatorio(relatorio_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM relatorios WHERE id = %s", (relatorio_id,))
+    relatorio = cursor.fetchone()
+
+    if not relatorio:
+        flash('Relatório não encontrado.')
+        return redirect(url_for('dashboard'))
+
+    if request.method == 'POST':
+        titulo = request.form['titulo']
+        arquivo = request.files.get('arquivo')
+        caminho_arquivo = relatorio['arquivo']
+
+        if arquivo and arquivo.filename:
+            filename = secure_filename(arquivo.filename)
+            caminho_arquivo = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace('\\', '/')
+            arquivo.save(caminho_arquivo)
+            caminho_arquivo = caminho_arquivo.replace('static/', '')
+
+        cursor.execute("UPDATE relatorios SET titulo=%s, arquivo=%s WHERE id=%s",
+                       (titulo, caminho_arquivo, relatorio_id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('projeto', projeto_id=relatorio['projeto_id']))
+
+    conn.close()
+    return render_template('editar_relatorio.html', relatorio=relatorio)
+
+@app.route('/excluir_relatorio/<int:relatorio_id>')
+def excluir_relatorio(relatorio_id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT projeto_id FROM relatorios WHERE id = %s", (relatorio_id,))
+    relatorio = cursor.fetchone()
+
+    if relatorio:
+        projeto_id = relatorio['projeto_id']
+        cursor.execute("DELETE FROM relatorios WHERE id = %s", (relatorio_id,))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('projeto', projeto_id=projeto_id))
+
+    conn.close()
+    flash('Relatório não encontrado.')
+    return redirect(url_for('dashboard'))
 
 
 if __name__ == '__main__':
